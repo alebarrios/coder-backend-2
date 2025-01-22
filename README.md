@@ -1,8 +1,8 @@
-# Programación Backend I: Desarrollo Avanzado de Backend (comisión 70365)
+# Programación Backend II: Diseño y Arquitectura Backend (comisión 70370)
 
-## Entrega Final - Alejandro Barrios
+## 1ra Pre-Entrega - Alejandro Barrios
 Instrucciones para ejecutar el proyecto:
-* Clonar repositorio: https://github.com/alebarrios/coder-backend-1.git
+* Clonar repositorio: https://github.com/alebarrios/coder-backend-2.git
 * Desde la raíz del proyecto, ejecutar comando: ```npm install```
 * Dado que la aplicación se conecta a una MongoDB, es necesario crear un archivo llamado ```.env``` en la raíz del proyecto con las siguientes variables:
   * ```MONGO_USERNAME=tu_usuario```
