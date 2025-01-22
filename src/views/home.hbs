@@ -1,0 +1,20 @@
+<header>
+    <h1>Lista de Productos - HTTP</h1>
+</header>
+
+<main class="container">
+    <table>
+        <tbody id="products-list">
+        <tr>
+            <th>Id</th>
+            <th>Título</th>
+            <th>Precio</th>
+            <th>Categoría</th>
+        </tr>
+        {{#each products }}
+        {{> product this}}
+        {{/each}}
+        </tbody>
+    </table>
+    <button id="btn-refresh-products-list">Traer TODOS los productos</button>
+</main>
