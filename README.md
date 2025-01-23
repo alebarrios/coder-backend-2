@@ -1,6 +1,6 @@
 # Programación Backend II: Diseño y Arquitectura Backend (comisión 70370)
 
-## 1ra Pre-Entrega - Alejandro Barrios
+## 1ra PreEntrega - Alejandro Barrios
 Instrucciones para ejecutar el proyecto:
 * Clonar repositorio: https://github.com/alebarrios/coder-backend-2.git
 * Desde la raíz del proyecto, ejecutar comando: ```npm install```
