@@ -9,26 +9,26 @@ export default class UserManager {
         this.#userModel = UserModel;
     }
 
-    // Busca un usuario por su ID
-    async #findOneById(id) {
+    // Busca un producto por su ID
+    async findOneById(id) {
 
         if (!isValidID(id)) {
             throw new ErrorManager("ID inválido", 400);
         }
+        const productFound = await this.#userModel.findById(id);
 
-        const userFound = await this.#userModel.findById(id);
-
-        if (!userFound) {
+        if (!productFound) {
             throw new ErrorManager("ID no encontrado", 404);
         }
 
-        return userFound;
+        return productFound;
     }
 
-    // Obtiene un usuario específico por su ID
-    async getOneById(id) {
+    // Obtiene un usuario específico por su Email
+    async getOneByEmail(email) {
         try {
-            return await this.#findOneById(id);
+            console.log("getOneByEmail: ", email);
+            return await this.#userModel.findOne({ email });
         } catch (error) {
             throw ErrorManager.handleError(error);
         }
