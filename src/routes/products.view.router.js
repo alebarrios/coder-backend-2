@@ -1,10 +1,11 @@
 import { Router } from "express";
 import ProductManager from "../managers/ProductManager.js";
+import { isAuthenticated } from "../utils/sessionCheck.js";
 
 const productsViewRouter = Router();
 const productManager = new ProductManager();
 
-productsViewRouter.get("/", async (req, res) => {
+productsViewRouter.get("/", isAuthenticated, async (req, res) => {
     try {
         const products = await productManager.getAll();
         res.status(200)
@@ -14,7 +15,7 @@ productsViewRouter.get("/", async (req, res) => {
     }
 });
 
-productsViewRouter.get("/:id", async (req, res) => {
+productsViewRouter.get("/:id", isAuthenticated, async (req, res) => {
     try {
         const { id } = req.params;
         const product = await productManager.getOneById(id);

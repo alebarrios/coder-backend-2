@@ -1,10 +1,11 @@
 import { Router } from "express";
 import CartManager from "../managers/CartManager.js";
+import { isAuthenticated } from "../utils/sessionCheck.js";
 
 const cartsViewRouter = Router();
 const cartManager = new CartManager();
 
-cartsViewRouter.get("/:cid", async (req, res) => {
+cartsViewRouter.get("/:cid", isAuthenticated, async (req, res) => {
     try {
         const { cid } = req.params;
         const cart = await cartManager.getOneById(cid);
