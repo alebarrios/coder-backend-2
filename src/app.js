@@ -3,8 +3,8 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import productsViewRouter from "./routes/products.view.router.js";
 import cartsViewRouter from "./routes/carts.view.router.js";
+import usersViewRouter from "./routes/users.view.router.js";
 import { config as configHandlebars } from "./config/handlebars.config.js";
-import { config as configWebsocket } from "./config/websocket.config.js";
 import { connectDB } from "./config/mongoose.config.js";
 
 const app = express();
@@ -18,9 +18,11 @@ app.use(express.json());
 
 configHandlebars(app);
 
-app.use('/', productsViewRouter);
+app.use('/products', productsViewRouter);
 app.use('/carts', cartsViewRouter);
+app.use('/', usersViewRouter);
 
+// API
 productsRouter(app);
 cartsRouter(app);
 
@@ -31,7 +33,5 @@ app.use("*", (req, res) => {
 const httpServer = app.listen(PORT, () => {
     console.log(`server running at http://localhost:${PORT}`);
 });
-
-configWebsocket(httpServer);
 
 export default app;
