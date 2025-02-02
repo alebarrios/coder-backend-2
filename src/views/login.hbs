@@ -1,0 +1,25 @@
+<header>
+    <h1>{{title}} - Tienda de Productos</h1>
+</header>
+
+<main class="container">
+    <form action="/api/sessions/login" method="post">
+        <div>
+            <div>
+                <label for="email">Email:</label>
+                <br />
+                <input type="email" id="email" name="email" placeholder="xxx@mail.com" />
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <br />
+                <input type="password" id="password" name="password" placeholder="****" />
+            </div>
+            <br />
+            <button type="submit">Ingresar</button>
+        </div>
+    </form>
+    ¿No tienes cuenta?
+    <a href="/register">Registrar</a>
+    <a href="/api/sessions/auth/google" class="btn btn-google">Registrar con Google</a>
+</main>
