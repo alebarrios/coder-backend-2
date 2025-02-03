@@ -65,6 +65,15 @@ usersViewRouter.get("/fail-login", (req, res) => {
     res.redirect("/login");
 });
 
+usersViewRouter.get("/auth/google",passport.authenticate('google',{scope:["email", "profile"]}))
+
+usersViewRouter.get("/auth/google/callback",
+    passport.authenticate("google", {
+      successRedirect: "/products",
+      failureRedirect: "/login",
+    })
+  );
+
 usersViewRouter.post("/logout", (req, res, next) => {
     req.logout((err) => {
       if (err) {

@@ -24,7 +24,6 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: [ true, "La contraseña es obligatoria" ],
     },
     cart_id: {
         type: Schema.Types.ObjectId,

@@ -11,7 +11,7 @@ import initializePassport from "./config/passport.config.js";
 import passport from "passport";
 
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 const SESSION_TTL = 100;
 // Conexión con la Base de Datos del Cloud de MongoDB
 connectDB();

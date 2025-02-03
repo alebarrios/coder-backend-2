@@ -6,7 +6,7 @@ import UserManager from "../managers/UserManager.js";
 
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
-const googleCallbackURL = process.env.GOOGLE_CALLBACK_URL;
+const googleCallbackURL = "http://localhost:3000/auth/google/callback"
 
 const initializePassport = () => {
   const userManager = new UserManager();
@@ -89,14 +89,15 @@ const initializePassport = () => {
     new GoogleStrategy({
       clientID: googleClientId,
       clientSecret:googleClientSecret,
-      callbackURL:googleCallbackURL
+      callbackURL:googleCallbackURL,
       },
     async(request, accessToken, refreshToken,profile,done)=>{
-      console.log("GoogleStrategy: ", profile);
+      //console.log("GoogleStrategy: ", profile);
 
       try {
         const userFound = await userManager.getOneByEmail(profile.emails[0]?.value);
         if(userFound){
+          console.log("GoogleStrategy - Usuario encontrado -> Products");
           return done(null, userFound)
         }
         console.log("GoogleStrategy - Usuario no está registrado. Registrar");
@@ -105,6 +106,8 @@ const initializePassport = () => {
             first_name: profile.name.givenName || "",
             last_name: profile.name.familyName || "",
             email: profile.emails[0]?.value || "",
+            age: 18,
+            cart_id: null,
             password: "", // Dejar vacío ya que la autenticación es con Google
           };
 
