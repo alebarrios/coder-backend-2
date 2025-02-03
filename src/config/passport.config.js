@@ -42,7 +42,7 @@ const initializePassport = () => {
 
           return done(null, user);
         } catch (error) {
-          return done(`error al crear el usuario ${error}`, false);
+          return done(`Error al crear el usuario ${error}`, false);
         }
       }
     )

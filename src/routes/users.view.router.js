@@ -5,13 +5,17 @@ const usersViewRouter = Router();
 
 usersViewRouter.get("/login", async (req, res) => {
     try {
-        res.status(200)
-        .render("login", {
-            layout : 'index',
-            style: 'index.css',
-            js: 'login.js',
-            title: "Login",
-            });
+        if (req.isUnauthenticated()){
+            res.status(200)
+            .render("login", {
+                layout : 'index',
+                style: 'index.css',
+                js: 'login.js',
+                title: "Login",
+                });
+        } else {
+            res.redirect('/products');
+        }
     } catch (error) {
         res.status(error.code || 500).send(`<h1>Error</h1><h3>${error.message}</h3>`);
     }
@@ -19,6 +23,7 @@ usersViewRouter.get("/login", async (req, res) => {
 
 usersViewRouter.get("/register", async (req, res) => {
     try {
+        if (req.isUnauthenticated()){
         res.status(200)
         .render("register", {
             layout : 'index',
@@ -26,6 +31,9 @@ usersViewRouter.get("/register", async (req, res) => {
             js: 'register.js',
             title: "Register",
             });
+        } else {
+            res.redirect('/products');
+        }
     } catch (error) {
         res.status(error.code || 500).send(`<h1>Error</h1><h3>${error.message}</h3>`);
     }
@@ -34,21 +42,20 @@ usersViewRouter.get("/register", async (req, res) => {
 usersViewRouter.post("/register",
     passport.authenticate("register", { failureRedirect: "fail-register" }),
     async (req, res) => {
-        console.log("Usuario registrado: ", req.session.user);
+        console.log("Usuario registrado: ", req.session.passport.user);
         res.redirect("/login");
     }
 );
 
 usersViewRouter.get("/fail-register", (req, res) => {
-    res
-      .status(400)
-      .send(`<h1>Error</h1><h3>Error al registrar el usuario</h3>`);
+    console.log("Error o Usuario ya existe. Redireccionando a /register");
+    res.redirect("/register");
 });
 
 usersViewRouter.post("/login",
     passport.authenticate("login", { failureRedirect: "fail-login" }),
     async (req, res) => {
-        console.log("Usuario logeado: ", req.session.user);
+        console.log("Usuario logeado: ", req.session.passport.user);
         res.redirect("/products");
     }
 );
@@ -56,6 +63,15 @@ usersViewRouter.post("/login",
 usersViewRouter.get("/fail-login", (req, res) => {
     console.log("Redireccionando a /login");
     res.redirect("/login");
+});
+
+usersViewRouter.post("/logout", (req, res, next) => {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/login");
+    });
 });
 
 usersViewRouter.get("/", async (req, res) => {
