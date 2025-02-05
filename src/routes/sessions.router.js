@@ -28,7 +28,7 @@ userRouter.post("/login", async (req, res) => {
 
         let token = createToken(user);
 
-        res.cookie("authCookie", token, { maxAge: 60 * 2, httpOnly: true }) // TODO poner en true
+        res.cookie("authCookie", token, { maxAge: 60 * 2, httpOnly: true })
         .json({ status: "success", message: "Login exitoso" });
 
     } catch (error) {
