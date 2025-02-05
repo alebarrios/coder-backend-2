@@ -1,4 +1,5 @@
 import passport from "passport";
+import jwt from "passport-jwt";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import local from "passport-local";
 import { createHash, isValidPassword } from "../utils/cryptUtils.js";
@@ -92,7 +93,6 @@ const initializePassport = () => {
       callbackURL:googleCallbackURL,
       },
     async(request, accessToken, refreshToken,profile,done)=>{
-      //console.log("GoogleStrategy: ", profile);
 
       try {
         const userFound = await userManager.getOneByEmail(profile.emails[0]?.value);
@@ -122,10 +122,38 @@ const initializePassport = () => {
   passport.serializeUser((user, done) => {
     done(null, user._id);
   });
+
   passport.deserializeUser(async (id, done) => {
     const user = await userManager.findOneById(id);
     done(null, user);
   });
+
+  passport.use(
+    "jwt",
+    new jwt.Strategy(
+      {
+        jwtFromRequest: jwt.ExtractJwt.fromExtractors([cookieExtractor]),
+        secretOrKey: process.env.SESSION_SECRET_KEY, //la misma que pase en utils al sign
+      },
+      async (jwt_payload, done) => {
+        console.log("jwt.Strategy - jwt_payload: ", jwt_payload);
+
+        try {
+          return done(null, jwt_payload);//user o false
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+};
+
+const cookieExtractor = (req) => {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies["authCookie"];
+  }
+  return token;
 };
 
 export default initializePassport;

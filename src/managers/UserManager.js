@@ -27,8 +27,15 @@ export default class UserManager {
     // Obtiene un usuario específico por su Email
     async getOneByEmail(email) {
         try {
-            console.log("getOneByEmail: ", email);
             return await this.#userModel.findOne({ email });
+        } catch (error) {
+            throw ErrorManager.handleError(error);
+        }
+    }
+
+    async getOneByEmailAndPassword(email, password) {
+        try {
+            return await this.#userModel.findOne({ $and : [ { email }, { password } ]});
         } catch (error) {
             throw ErrorManager.handleError(error);
         }

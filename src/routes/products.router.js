@@ -1,17 +1,18 @@
 import express from "express";
 import ProductManager from "../managers/ProductManager.js";
+import { jwtAuth } from "../utils/sessionCheck.js";
 
 const productsRouter = express.Router();
 const productManager = new ProductManager();
 
-productsRouter.get('/', getAllProducts)
-productsRouter.get('/:id', getProductById)
+productsRouter.get('/', jwtAuth, getAllProducts)
+productsRouter.get('/:id', jwtAuth, getProductById)
 
-productsRouter.post('/', postProduct)
+productsRouter.post('/', jwtAuth, postProduct)
 
-productsRouter.put('/:id', putProduct)
+productsRouter.put('/:id', jwtAuth, putProduct)
 
-productsRouter.delete('/:id', deleteProduct)
+productsRouter.delete('/:id', jwtAuth, deleteProduct)
 
 //inversion de control. Lo uso para poder hacer el Testing lo mas desacoplado posible.
 export default (app) => { app.use('/api/products', productsRouter)}
