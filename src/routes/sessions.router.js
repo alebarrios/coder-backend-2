@@ -3,13 +3,10 @@ import UserManager from "../managers/UserManager.js";
 import { createToken, jwtAuth } from "../utils/sessionCheck.js";
 import { isValidPassword } from "../utils/cryptUtils.js";
 
-
 const userRouter = express.Router();
 const userManager = new UserManager();
 
 export default (app) => { app.use('/api/sessions', userRouter)}
-
-
 
 userRouter.get('/current', jwtAuth, (req,res)=>{
     console.log("Req.user: ", req.user);
@@ -37,5 +34,5 @@ userRouter.post("/login", async (req, res) => {
     } catch (error) {
         res.status(error.code).json({ status: "error", message: error.message });
     }
-  });
+});
 
