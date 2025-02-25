@@ -1,15 +1,9 @@
+import env from "./env.js";
 import { connect, Types } from "mongoose";
-import { config } from "dotenv";
-
-config();
-
-const username = process.env.MONGO_USERNAME;
-const password = process.env.MONGO_PASSWORD;
-const dbName = process.env.MONGO_DBNAME;
-const clusterUrl = process.env.MONGO_CLUSTER_URL;
 
 export const connectDB = async () => {
-    const URI = `mongodb+srv://${username}:${password}@${clusterUrl}/${dbName}`;
+    const URI =
+    `mongodb+srv://${env.mongoUsername}:${env.mongoPassword}@${env.mongoClusterUrl}/${env.mongoDbName}`;
 
     try {
         await connect(URI);

@@ -1,3 +1,4 @@
+import env from "./config/env.js";
 import express from "express";
 import cookieParser from "cookie-parser";
 import productsRouter from "./routes/products.router.js";
@@ -13,7 +14,7 @@ import initializePassport from "./config/passport.config.js";
 import passport from "passport";
 
 const app = express();
-const PORT = 3000;
+const PORT = env.port || 3000;
 const SESSION_TTL = 100;
 // Conexión con la Base de Datos del Cloud de MongoDB
 connectDB();

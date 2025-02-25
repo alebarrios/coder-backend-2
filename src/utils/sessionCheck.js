@@ -1,3 +1,4 @@
+import env from "../config/env.js";
 import jwt from "jsonwebtoken";
 import passport from "passport";
 
@@ -12,7 +13,7 @@ export const isAuthenticated = (req, res, next) => {
 }
 
 export const createToken = (user) => {
-  return jwt.sign(user, process.env.SESSION_SECRET_KEY, { expiresIn: '1h' });
+  return jwt.sign(user, env.sessionSecret, { expiresIn: '1h' });
 }
 
 // Middleware personalizado para manejar respuestas "Unauthorized"
