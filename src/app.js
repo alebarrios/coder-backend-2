@@ -37,7 +37,7 @@ app.use('/', usersViewRouter);
 
 // API
 productsRouter(app);
-cartsRouter(app);
+app.use('/api/carts', cartsRouter)
 sessionsRouter(app);
 
 
