@@ -1,14 +1,14 @@
 import { Router } from "express";
-import CartManager from "../managers/CartManager.js";
+//import CartManager from "../managers/CartManager.js";
 import { isAuthenticated } from "../utils/sessionCheck.js";
 
 const cartsViewRouter = Router();
-const cartManager = new CartManager();
+//const cartManager = new CartManager();
 
 cartsViewRouter.get("/:cid", isAuthenticated, async (req, res) => {
     try {
         const { cid } = req.params;
-        const cart = await cartManager.getOneById(cid);
+//        const cart = await cartManager.getOneById(cid);
 
         res.status(200)
         .render("cartDetail", { layout : 'index', style: 'index.css', js: 'cartDetail.js', id : cid, products: cart.toJSON().products });

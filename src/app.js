@@ -8,7 +8,7 @@ import cartsViewRouter from "./routes/carts.view.router.js";
 import usersViewRouter from "./routes/users.view.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import { config as configHandlebars } from "./config/handlebars.config.js";
-import { connectDB } from "./config/mongoose.config.js";
+//import { connectDB } from "./config/mongoose.config.js";
 import { configSession } from "./config/session.config.js";
 import initializePassport from "./config/passport.config.js";
 import passport from "passport";
@@ -17,7 +17,7 @@ const app = express();
 const PORT = env.port || 3000;
 const SESSION_TTL = 100;
 // Conexión con la Base de Datos del Cloud de MongoDB
-connectDB();
+//connectDB();
 
 
 app.use("/api/public", express.static("./src/public"));

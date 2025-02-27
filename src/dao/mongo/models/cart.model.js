@@ -22,7 +22,7 @@ const cartSchema = new Schema({
     versionKey: false, // Elimina el campo __v de versión
 });
 
-// Agrega mongoose-paginate-v2 para habilitar las funcionalidades de paginación.
+// Agrega mongoose-paginate-v2
 cartSchema.plugin(paginate);
 
 const CartModel = model("carts", cartSchema);
