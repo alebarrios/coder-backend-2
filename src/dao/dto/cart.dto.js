@@ -15,4 +15,11 @@ export default class CartDTO {
     return this.#id;
   }
 
+  toJSON() {
+    return {
+      products: this.#products.map((product) => product.toJSON()),
+      id: this.#id,
+    };
+  }
+
 }

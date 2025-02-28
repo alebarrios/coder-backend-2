@@ -1,5 +1,5 @@
 <header>
-    <h1>Lista de Productos - HTTP</h1>
+    <h1>Hola {{ name }}! Bienvenid@ a mi E-Commerce!</h1>
 </header>
 
 <main class="container">
@@ -17,6 +17,7 @@
         </tbody>
     </table>
     <button id="btn-refresh-products-list">Traer TODOS los productos</button>
+    <a href="/carts/{{ cartId }}">Ver carrito</a>
     <form action="/logout" method="post">
         <button type="submit">Logout</button>
     </form>

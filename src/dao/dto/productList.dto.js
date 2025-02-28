@@ -27,7 +27,7 @@ export default class ProductListDTO {
 
   toJSON() {
     return {
-      docs: this.#productList,
+      docs: this.#productList.map((product) => product.toJSON()),
       totalPages: this.#totalPages,
       page: this.#page,
       hasPrevPage: this.#hasPrevPage,

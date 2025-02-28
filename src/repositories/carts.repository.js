@@ -12,7 +12,6 @@ export default class CartsRepository {
     async getOneById(id) {
         try {
             const cart = await this.#cartsDao.get(id);
-            console.log("getOneById: ", cart);
             return new CartDTO(cart);
 
         } catch (error) {
