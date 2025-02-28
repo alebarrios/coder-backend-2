@@ -1,9 +1,9 @@
 import { Router } from "express";
-import ProductManager from "../managers/ProductManager.js";
+//import ProductManager from "../managers/ProductManager.js";
 import { isAuthenticated } from "../utils/sessionCheck.js";
 
 const productsViewRouter = Router();
-const productManager = new ProductManager();
+//const productManager = new ProductManager();
 
 productsViewRouter.get("/", isAuthenticated, async (req, res) => {
     try {

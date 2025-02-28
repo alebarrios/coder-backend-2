@@ -1,4 +1,5 @@
 import CartModel from "./models/cart.model.js";
+import ErrorManager from "../../managers/ErrorManager.js";
 import { isValidID } from "../../config/mongoose.config.js";
 
 export default class CartsDAO{
@@ -8,6 +9,10 @@ export default class CartsDAO{
     }
 
     get = async (id)=>{
+        if (!isValidID(id)) {
+            throw new ErrorManager("ID inválido", 400);
+        }
+
         return await CartModel.findById(id).populate("products.product");
     }
 
@@ -16,9 +21,7 @@ export default class CartsDAO{
     }
 
     addProduct = async (id, productId)=>{
-        if (!isValidID(id)) {
-            throw new ErrorManager("ID inválido", 400);
-        }
+
         const cartFound = await this.get(id);
 
         if (!cartFound) {
