@@ -51,3 +51,14 @@ export const handlePolicies = (policies, render = false) => (req, res, next) => 
     next();
 };
 
+export const isCartFromUser = (req, res, next) => {
+
+    const { cid } = req.params;
+    if (req.user.cart_id == cid) {
+        return next();
+    }
+    res.status(403).json({
+        status: "error",
+        error: "Acceso prohibido. No tenes los permisos necesarios",
+    });
+}

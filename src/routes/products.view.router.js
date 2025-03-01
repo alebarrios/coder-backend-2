@@ -4,7 +4,7 @@ import { isAuthenticated, handlePolicies } from "../middlewares/policies-checker
 
 const productsViewRouter = Router();
 
-productsViewRouter.get("/", isAuthenticated, handlePolicies(["USER", "ADMIN"]), productsViewController.getAllProducts);
-productsViewRouter.get("/:id", isAuthenticated, handlePolicies(["USER", "ADMIN"]), productsViewController.getProductById);
+productsViewRouter.get("/", isAuthenticated, handlePolicies(["USER", "ADMIN"], true), productsViewController.getAllProducts);
+productsViewRouter.get("/:id", isAuthenticated, handlePolicies(["USER", "ADMIN"], true), productsViewController.getProductById);
 
 export default productsViewRouter;
