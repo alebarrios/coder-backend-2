@@ -1,0 +1,23 @@
+<header>
+    <h1>{{ title }}</h1>
+</header>
+
+<main class="container">
+
+    <section>
+        <h3>Formulario de Alta de Productos</h3>
+        <form action="/products" method="post" class="products__form" id="products-form">
+            <input type="text" name="title" placeholder="Nombre del producto">
+            <input type="text" name="description" placeholder="Descripción del producto">
+            <input type="text" name="code" placeholder="Código del producto">
+            <input type="number" name="price" placeholder="precio del producto">
+            <input type="number" name="stock" placeholder="Stock del producto">
+            <input type="text" name="category" placeholder="Categoría del producto">
+
+            <input type="submit" value="Guardar" style="width: 100%">
+        </form>
+    </section>
+
+    <p class="error-message" id="error-message"></p>
+    <a href="/products">Volver a Productos</a>
+</main>

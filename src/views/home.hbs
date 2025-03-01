@@ -1,5 +1,10 @@
 <header>
-    <h1>Hola {{ name }}! Bienvenid@ a mi E-Commerce!</h1>
+    {{#ifEquals role "USER"}}
+        <h1>Hola {{ name }}! Bienvenid@ a mi E-Commerce!</h1>
+    {{/ifEquals}}
+    {{#ifEquals role "ADMIN"}}
+        <h1>Hola {{ name }}! Estas en modo administrador, ojo con lo que haces.</h1>
+    {{/ifEquals}}
 </header>
 
 <main class="container">
@@ -16,9 +21,12 @@
         {{/each}}
         </tbody>
     </table>
-    <button id="btn-refresh-products-list">Traer TODOS los productos</button>
+    
     {{#ifEquals role "USER"}}
         <a href="/carts/{{ cartId }}">Ver carrito</a>
+    {{/ifEquals}}
+    {{#ifEquals role "ADMIN"}}
+        <a href="/products/new">Nuevo producto</a>
     {{/ifEquals}}
     <form action="/logout" method="post">
         <button type="submit">Logout</button>

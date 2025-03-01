@@ -72,15 +72,4 @@ export default class CartsRepository {
             throw ErrorManager.handleError(error);
         }
     }
-
-        // Inserta un carrito con productos
-        async purchaseCart(id) {
-            try {
-                const cart = await this.#cartsDao.get(id);
-                return new CartDTO(cart);
-            } catch (error) {
-                throw ErrorManager.handleError(error);
-            }
-        }
-
 }

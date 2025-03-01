@@ -27,7 +27,25 @@ async function getProductById(req, res) {
     }
 };
 
+function showNewProductForm(req, res) {
+
+    res.status(200).render("newProduct",
+        { layout: "index", style: "index.css", title: "Nuevo Producto" });
+};
+
+async function postProduct(req,res){
+    try {
+        await productService.insertOne(req.body);
+        res.status(201).redirect(`/products`);
+
+    } catch (error) {
+        res.status(error.code).json({ status: "error", message: error.message });
+    }
+};
+
 export default
 {getAllProducts,
 getProductById,
+showNewProductForm,
+postProduct,
 }

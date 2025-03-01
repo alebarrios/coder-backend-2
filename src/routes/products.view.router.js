@@ -5,6 +5,9 @@ import { isAuthenticated, handlePolicies } from "../middlewares/policies-checker
 const productsViewRouter = Router();
 
 productsViewRouter.get("/", isAuthenticated, handlePolicies(["USER", "ADMIN"], true), productsViewController.getAllProducts);
+productsViewRouter.get("/new", isAuthenticated, handlePolicies(["ADMIN"], true), productsViewController.showNewProductForm);
 productsViewRouter.get("/:id", isAuthenticated, handlePolicies(["USER", "ADMIN"], true), productsViewController.getProductById);
+
+productsViewRouter.post("/", isAuthenticated, handlePolicies(["ADMIN"], true), productsViewController.postProduct);
 
 export default productsViewRouter;
