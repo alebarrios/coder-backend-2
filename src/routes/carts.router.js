@@ -1,25 +1,19 @@
 import express from "express";
 import cartsController from "../controllers/carts.controller.js";
-import { jwtAuth } from "../utils/sessionCheck.js";
+import { handlePolicies } from "../middlewares/policies-checker.js";
+import { jwtAuth } from "../middlewares/passportJwtAuth.js";
 
 const cartsRouter = express.Router();
 
-//cartsRouter.get('/:cid', jwtAuth, cartsController.getProductsByCartId)
-cartsRouter.get('/:cid', cartsController.getProductsByCartId)
+cartsRouter.get('/:cid', jwtAuth, handlePolicies(["USER"]), cartsController.getProductsByCartId)
 
-//cartsRouter.post('/', jwtAuth, cartsController.postCart)
-cartsRouter.post('/', cartsController.postCart)
-//cartsRouter.post('/:cid/product/:pid', jwtAuth, cartsController.postProductInCart)
-cartsRouter.post('/:cid/product/:pid', cartsController.postProductInCart)
+cartsRouter.post('/', jwtAuth, handlePolicies(["USER"]), cartsController.postCart)
+cartsRouter.post('/:cid/product/:pid', jwtAuth, handlePolicies(["USER"]), cartsController.postProductInCart)
 
-//cartsRouter.put('/:cid', jwtAuth, cartsController.putProductsInCart)
-cartsRouter.put('/:cid', cartsController.putProductsInCart)
-//cartsRouter.put('/:cid/products/:pid', jwtAuth, cartsController.setQuantityOfProductsInCart)
-cartsRouter.put('/:cid/products/:pid', cartsController.setQuantityOfProductsInCart)
+cartsRouter.put('/:cid', jwtAuth, handlePolicies(["USER"]), cartsController.putProductsInCart)
+cartsRouter.put('/:cid/products/:pid', jwtAuth, handlePolicies(["USER"]), cartsController.setQuantityOfProductsInCart)
 
-//cartsRouter.delete('/:cid/products/:pid', jwtAuth, cartsController.deleteProductFromCart)
-cartsRouter.delete('/:cid/products/:pid', cartsController.deleteProductFromCart)
-//cartsRouter.delete('/:cid', jwtAuth, cartsController.deleteAllProductsFromCart)
-cartsRouter.delete('/:cid', cartsController.deleteAllProductsFromCart)
+cartsRouter.delete('/:cid/products/:pid', jwtAuth, handlePolicies(["USER"]), cartsController.deleteProductFromCart)
+cartsRouter.delete('/:cid', jwtAuth, handlePolicies(["USER"]), cartsController.deleteAllProductsFromCart)
 
 export default cartsRouter;

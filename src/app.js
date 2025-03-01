@@ -38,7 +38,8 @@ app.use('/carts', cartsViewRouter);
 app.use('/', usersViewRouter);
 
 app.use("*", (req, res) => {
-    res.status(404).render('error404', {layout : 'index', style: 'index.css', title: 'Error 404'});
+    res.status(404).render('error',
+        {layout : 'index', style: 'index.css', error: '404', title: 'El recurso no existe en el servidor'});
 });
 
 const httpServer = app.listen(PORT, () => {

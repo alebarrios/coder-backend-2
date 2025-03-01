@@ -10,6 +10,11 @@ export const config = (app) => {
         extname: 'hbs'
     }));
 
+    const hbs = handlebars.create({});
+    hbs.handlebars.registerHelper("ifEquals", function (arg1, arg2, options) {
+        return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
+    });
+
     // Establece la carpeta donde se encuentran las vistas
     app.set("views", paths.views);
 

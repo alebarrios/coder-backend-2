@@ -1,0 +1,7 @@
+<div class="error">
+    <h1>Error {{ error }}</h1>
+    <h3>{{ title }}</h3>
+    {{#ifEquals error "404"}}
+        <img src="/api/public/images/error_404.png" alt="Imagen que representa al error 404">
+    {{/ifEquals}}
+</div>

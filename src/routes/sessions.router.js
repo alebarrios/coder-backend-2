@@ -1,12 +1,12 @@
 import express from "express";
 import sessionsController from "../controllers/sessions.controller.js";
-import { jwtAuth } from "../utils/sessionCheck.js";
+import { jwtAuth } from "../middlewares/passportJwtAuth.js";
+import { handlePolicies } from "../middlewares/policies-checker.js";
 
 const sessionsRouter = express.Router();
 
-//sessionsRouter.get('/current', jwtAuth, sessionsController.getCurrent);
-sessionsRouter.get('/current', jwtAuth, sessionsController.getCurrent);
+sessionsRouter.get('/current', jwtAuth, handlePolicies(["USER","ADMIN"]), sessionsController.getCurrent);
 
-sessionsRouter.post("/login", sessionsController.loginSession);
+sessionsRouter.post("/login", handlePolicies(["PUBLIC"]), sessionsController.loginSession);
 
 export default sessionsRouter;

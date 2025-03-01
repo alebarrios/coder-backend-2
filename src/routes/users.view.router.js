@@ -1,12 +1,13 @@
 import { Router } from "express";
 import passport from "passport";
 import usersViewController from "../controllers/users.view.controller.js";
+import { handlePolicies } from "../middlewares/policies-checker.js";
 
 const usersViewRouter = Router();
 
-usersViewRouter.get("/login", usersViewController.loginUser);
+usersViewRouter.get("/login", handlePolicies(["PUBLIC"]), usersViewController.loginUser);
 
-usersViewRouter.get("/register", usersViewController.registerUser);
+usersViewRouter.get("/register", handlePolicies(["PUBLIC"]), usersViewController.registerUser);
 
 usersViewRouter.post("/register",
     passport.authenticate("register", { failureRedirect: "fail-register" }),
@@ -29,9 +30,9 @@ usersViewRouter.get("/auth/google/callback",
     })
   );
 
-usersViewRouter.post("/logout", usersViewController.logout);
+usersViewRouter.post("/logout", handlePolicies(["PUBLIC"]), usersViewController.logout);
 
-usersViewRouter.get("/", usersViewController.rootRedirect);
+usersViewRouter.get("/", handlePolicies(["PUBLIC"]), usersViewController.rootRedirect);
 
 
 export default usersViewRouter;
