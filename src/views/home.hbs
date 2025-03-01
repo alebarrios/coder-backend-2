@@ -17,7 +17,9 @@
         </tbody>
     </table>
     <button id="btn-refresh-products-list">Traer TODOS los productos</button>
-    <a href="/carts/{{ cartId }}">Ver carrito</a>
+    {{#ifEquals role "USER"}}
+        <a href="/carts/{{ cartId }}">Ver carrito</a>
+    {{/ifEquals}}
     <form action="/logout" method="post">
         <button type="submit">Logout</button>
     </form>

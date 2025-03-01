@@ -1,0 +1,35 @@
+<header>
+    {{#if total}}
+    <h1>Compra - # {{ code }}</h1>
+    {{else}}
+    <h1>La compra no se ha podido realizar por falta de stock</h1>
+    {{/if}}
+</header>
+
+<main class="container">
+    {{#if total}}
+    {{#if productsWithoutStock.length}}
+    <h3>Productos que no pudieron ser comprados por falta de stock</h3>
+    <table>
+        <tbody id="products-list">
+        <tr>
+            <th>Id</th>
+        </tr>
+            {{#each productsWithoutStock }}
+            <tr>
+            <td>{{ this }}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
+    {{/if}}
+    {{#if total}}
+    <h1>Importe total compra: $ {{ total }}</h1>
+    {{/if}}
+    <a href="/carts/{{ cartId }}">Ver carrito</a>
+    <a href="/products">Volver a Productos</a>
+    <form action="/logout" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</main>

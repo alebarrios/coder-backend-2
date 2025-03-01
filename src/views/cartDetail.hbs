@@ -22,7 +22,9 @@
         </tbody>
     </table>
     <button id="btn-empty-cart">Vaciar Carrito</button>
-    <a href="carts/{{ id }}/purchase">Checkout</a>
+    <form action="{{ id }}/purchase" method="post">
+        <button type="submit">Checkout</button>
+    </form>
     <a href="/products">Volver a Productos</a>
     <form action="/logout" method="post">
         <button type="submit">Logout</button>

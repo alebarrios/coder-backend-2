@@ -5,6 +5,7 @@ const DaoFactory = {
   CartsDao: null,
   ProductsDao: null,
   UsersDao: null,
+  TicketsDao: null,
 };
 
 switch (env.persistence) {
@@ -16,6 +17,8 @@ switch (env.persistence) {
     DaoFactory.ProductsDao = new ProductMongo();
     const { default: UserMongo } = await import("./mongo/users.mongo.dao.js");
     DaoFactory.UsersDao = new UserMongo();
+    const { default: TicketMongo } = await import("./mongo/tickets.mongo.dao.js");
+    DaoFactory.TicketsDao = new TicketMongo();
     break;
   }
   case "MEMORY": {

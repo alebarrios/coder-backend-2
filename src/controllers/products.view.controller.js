@@ -5,7 +5,7 @@ async function getAllProducts(req, res) {
         const productsListDTO = await productService.getAllProducts({});
         res.status(200)
         .render("home",
-            { layout : 'index', style: 'index.css', js: 'index.js',
+            { layout : 'index', style: 'index.css', js: 'index.js', role: req.user.role.toUpperCase(),
             name: req.user.first_name, cartId: req.user.cart_id,
             title: "Productos", products: productsListDTO.toJSON().docs });
     } catch (error) {
