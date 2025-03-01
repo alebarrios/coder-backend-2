@@ -4,9 +4,7 @@ import { createToken } from "../utils/sessionCheck.js";
 
 async function getCurrent(req, res) {
     console.log("Req.user: ", req.user);
-    const user = { ...req.user._doc };
-    delete user.password;
-    res.status(200).json({ status: "success", payload: user });
+    res.status(200).json({ status: "success", payload: req.user });
 }
 
 async function loginSession(req, res) {
@@ -14,7 +12,7 @@ async function loginSession(req, res) {
         const { email, password } = req.body;
         const userFound = await userService.validateEmailAndPass(email, password);
 
-        let token = createToken(userFound);
+        let token = createToken(userFound.toJSON());
 
         res.cookie("authCookie", token, { maxAge: 60 * 2, httpOnly: true })
         .json({ status: "success", message: "Login exitoso" });

@@ -127,10 +127,9 @@ const initializePassport = () => {
         secretOrKey: env.sessionSecret, //la misma que pase en utils al sign
       },
       async (jwt_payload, done) => {
-        console.log("jwt.Strategy - jwt_payload: ", jwt_payload);
-
+        const userDTO = await userService.findOneById(jwt_payload.id);
         try {
-          return done(null, jwt_payload);//user o false
+          return done(null, userDTO);//user o false
         } catch (error) {
           return done(error);
         }
@@ -141,9 +140,10 @@ const initializePassport = () => {
 
 const cookieExtractor = (req) => {
   let token = null;
-  if (req && req.cookies) {
+  if (req?.cookies) {
     token = req.cookies["authCookie"];
   }
+  console.log("cookieExtractor - token: ", token);
   return token;
 };
 

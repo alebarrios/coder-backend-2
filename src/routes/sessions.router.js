@@ -4,7 +4,9 @@ import { jwtAuth } from "../utils/sessionCheck.js";
 
 const sessionsRouter = express.Router();
 
+//sessionsRouter.get('/current', jwtAuth, sessionsController.getCurrent);
 sessionsRouter.get('/current', jwtAuth, sessionsController.getCurrent);
+
 sessionsRouter.post("/login", sessionsController.loginSession);
 
 export default sessionsRouter;

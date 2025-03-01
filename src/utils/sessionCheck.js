@@ -13,7 +13,7 @@ export const isAuthenticated = (req, res, next) => {
 }
 
 export const createToken = (user) => {
-  return jwt.sign(user, env.sessionSecret, { expiresIn: '1h' });
+    return jwt.sign(user, env.sessionSecret, { expiresIn: '1h' });
 }
 
 // Middleware personalizado para manejar respuestas "Unauthorized"
