@@ -3,13 +3,13 @@ import passport from "passport";
 import jwt from "passport-jwt";
 import { Strategy as GoogleStrategy } from "passport-google-oauth2";
 import local from "passport-local";
-import { createHash, isValidPassword } from "../utils/cryptUtils.js";
-import UserManager from "../managers/UserManager.js";
+import { createHash } from "../utils/cryptUtils.js";
+import { userService } from '../services/UserService.js';
+import { cartService } from '../services/CartService.js';
 
 const googleCallbackURL = "http://localhost:3000/auth/google/callback"
 
 const initializePassport = () => {
-  const userManager = new UserManager();
 
   passport.use(
     "register",
@@ -23,22 +23,24 @@ const initializePassport = () => {
 
         const { first_name, last_name, age, email } = req.body;
         try {
-          const userFound = await userManager.getOneByEmail(username);
+          const userFound = await userService.findOneByEmail(username);
           if (userFound) {
             console.log("Usuario ya existe");
             return done(null, false);
           }
+
+          const newCart = await cartService.insertOne({});
           const newUser = {
             first_name,
             last_name,
             email,
             age,
-            cart_id: null,
+            cart_id: newCart.id,
             role: req.body?.role || "user",
             password: createHash(password),
           };
           console.log("Creando usuario...", newUser);
-          const user = await userManager.insertOne(newUser);
+          const user = await userService.insertOne(newUser);
 
           return done(null, user);
         } catch (error) {
@@ -57,26 +59,16 @@ const initializePassport = () => {
       },
       async (req, username, password, done) => {
         try {
-          const userExist = await userManager.getOneByEmail(username);
-          if (!userExist){
-            console.log("Local Strategy - login - Usuario no encontrado");
-            return done(null, false);
-          }
-
-          const isValid = isValidPassword(password, userExist.password);
-          if (!isValid) {
-            console.log("Local Strategy - login - Contraseña incorrecta");
+          const userFound = await userService.validateEmailAndPass(username, password, false);
+          if (!userFound) {
+            console.log("Local Strategy - login - Usuario o Contraseña incorrecta");
 
             return done(null, false);
           } else {
-            req.session.user = {
-              first_name: userExist.first_name,
-              last_name: userExist.last_name,
-              email: userExist.email,
-            };
+            req.session.user = userFound.toJSON();
             console.log("Local Strategy - login user: " , req.session.user);
 
-            return done(null, userExist);
+            return done(null, userFound);
           }
         } catch (error) {
           return done(error.message);
@@ -94,7 +86,7 @@ const initializePassport = () => {
     async(request, accessToken, refreshToken,profile,done)=>{
 
       try {
-        const userFound = await userManager.getOneByEmail(profile.emails[0]?.value);
+        const userFound = await userService.findOneByEmail(profile.emails[0]?.value);
         if(userFound){
           console.log("GoogleStrategy - Usuario encontrado -> Products");
           return done(null, userFound)
@@ -106,11 +98,11 @@ const initializePassport = () => {
             last_name: profile.name.familyName || "",
             email: profile.emails[0]?.value || "",
             age: 18,
-            cart_id: null,
+            cart_id: await cartService.insertOne({}).id,
             password: "", // Dejar vacío ya que la autenticación es con Google
           };
 
-         const user= await userManager.insertOne(newUser)
+         const user= await userService.insertOne(newUser)
          return done(null, user)
       } catch (error) {
         return done(error)
@@ -119,11 +111,11 @@ const initializePassport = () => {
   )
 
   passport.serializeUser((user, done) => {
-    done(null, user._id);
+    done(null, user.id);
   });
 
   passport.deserializeUser(async (id, done) => {
-    const user = await userManager.findOneById(id);
+    const user = await userService.findOneById(id);
     done(null, user);
   });
 

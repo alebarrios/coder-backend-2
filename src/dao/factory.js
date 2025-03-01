@@ -14,6 +14,8 @@ switch (env.persistence) {
     DaoFactory.CartsDao = new CartMongo();
     const { default: ProductMongo } = await import("./mongo/products.mongo.dao.js");
     DaoFactory.ProductsDao = new ProductMongo();
+    const { default: UserMongo } = await import("./mongo/users.mongo.dao.js");
+    DaoFactory.UsersDao = new UserMongo();
     break;
   }
   case "MEMORY": {
