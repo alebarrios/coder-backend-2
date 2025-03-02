@@ -10,4 +10,10 @@ cartsViewRouter.get("/:cid", isAuthenticated, handlePolicies(["USER"], true), is
 cartsViewRouter.post('/:cid/purchase', isAuthenticated, handlePolicies(["USER"]), isCartFromUser,
     cartsViewController.purchaseCart);
 
+cartsViewRouter.post('/:cid/product/:pid', isAuthenticated, handlePolicies(["USER"]), isCartFromUser,
+    cartsViewController.addProductToCart);
+
+cartsViewRouter.delete('/:cid', isAuthenticated, handlePolicies(["USER"]), isCartFromUser,
+    cartsViewController.removeAllProductsFromCart);
+
 export default cartsViewRouter;

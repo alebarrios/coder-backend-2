@@ -27,5 +27,8 @@
         </tr>
         </tbody>
     </table>
-    <button id="btn-add-to-cart">Agregar al Carrito</button>
+    <form action="/carts/{{ cartId }}/product/{{ id }}" method="post">
+        <button type="submit">Agregar al Carrito</button>
+    </form>
+    <a href="/products">Volver a Productos</a>
 </main>

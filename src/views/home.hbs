@@ -15,13 +15,14 @@
             <th>Título</th>
             <th>Precio</th>
             <th>Categoría</th>
+            <th>Acciones</th>
         </tr>
         {{#each products }}
-        {{> product this}}
+        {{> product this role=../role cartId=../cartId}}
         {{/each}}
         </tbody>
     </table>
-    
+
     {{#ifEquals role "USER"}}
         <a href="/carts/{{ cartId }}">Ver carrito</a>
     {{/ifEquals}}

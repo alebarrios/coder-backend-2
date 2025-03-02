@@ -3,6 +3,7 @@
 </header>
 
 <main class="container">
+    {{#if products.length}}
     <table>
         <tbody id="products-list">
         <tr>
@@ -21,10 +22,16 @@
             {{/each}}
         </tbody>
     </table>
-    <button id="btn-empty-cart">Vaciar Carrito</button>
     <form action="{{ id }}/purchase" method="post">
         <button type="submit">Checkout</button>
     </form>
+
+    <form id="btn-empty-cart" action="/carts/{{ id }}">
+        <button type="submit">Vaciar Carrito</button>
+    </form>
+    {{else}}
+    <h3>No hay productos en el carrito</h3>
+    {{/if}}
     <a href="/products">Volver a Productos</a>
     <form action="/logout" method="post">
         <button type="submit">Logout</button>

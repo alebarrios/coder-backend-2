@@ -92,13 +92,17 @@ const initializePassport = () => {
           return done(null, userFound)
         }
         console.log("GoogleStrategy - Usuario no está registrado. Registrar");
+        const newCart = await cartService.insertOne({});
+        console.log("new cart: ", newCart);
+        console.log("id: ", newCart.id);
+        
           //si no existe lo crea
           const newUser = {
             first_name: profile.name.givenName || "",
             last_name: profile.name.familyName || "",
             email: profile.emails[0]?.value || "",
             age: 18,
-            cart_id: await cartService.insertOne({}).id,
+            cart_id: newCart.id,
             password: "", // Dejar vacío ya que la autenticación es con Google
           };
 

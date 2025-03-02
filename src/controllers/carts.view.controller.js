@@ -16,6 +16,16 @@ async function getCartById(req, res) {
     }
 };
 
+async function addProductToCart(req,res){
+    try {
+        const { cid, pid } = req.params;
+        await cartService.addProductToCart(cid,pid);
+        res.status(200).redirect(`/products`);
+    } catch (error) {
+        res.status(error.code || 500).json({ status: "error", message: error.message });
+    }
+};
+
 async function purchaseCart(req, res) {
     try {
         const { cid } = req.params;
@@ -34,7 +44,7 @@ async function purchaseCart(req, res) {
                 console.log("pr2: ", pr2);
                 console.log("item.product.price: ", item.product.price);
 
-                total += item.product.price;
+                total += item.product.price * item.quantity;
                 console.log("total: ", total);
             } else {
                 productsWithoutStock.push(item.product._id.toString());
@@ -66,7 +76,19 @@ async function purchaseCart(req, res) {
     }
 };
 
+async function removeAllProductsFromCart(req,res){
+    try {
+        const { cid } = req.params;
+        await cartService.updateProductsInCart(cid);
+        res.status(200).redirect(`/products`);
+    } catch (error) {
+        res.status(error.code || 500).json({ status: "error", message: error.message });
+    }
+};
+
 export default
 {getCartById,
+addProductToCart,
 purchaseCart,
+removeAllProductsFromCart,
 }

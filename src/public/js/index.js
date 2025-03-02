@@ -32,7 +32,3 @@ const loadProductsList = async () => {
         </tr>`;
     });
 };
-
-btnRefreshProductsList.addEventListener("click", () => {
-    loadProductsList();
-});

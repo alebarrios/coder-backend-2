@@ -21,6 +21,7 @@ async function getProductById(req, res) {
         res.status(200)
         .render("productDetail",
             { layout : 'index', style: 'index.css', js: 'productDetail.js',
+            cartId: req.user.cart_id,
             id, product: productDTO.toJSON() });
     } catch (error) {
         res.status(error.code || 500).send(`<h1>Error</h1><h3>${error.message}</h3>`);

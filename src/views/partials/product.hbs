@@ -3,4 +3,17 @@
     <td>{{this.title}}</td>
     <td>{{this.price}}</td>
     <td>{{this.category}}</td>
+    <td>
+        {{#ifEquals role "ADMIN"}}
+        <form action="/products/{{ this.id }}" method="delete">
+            <button type="submit">Eliminar</button>
+        </form>
+        {{/ifEquals}}
+        {{#ifEquals role "USER"}}
+        <form action="/carts/{{ cartId }}/product/{{ this.id }}" method="post">
+            <button type="submit">+Carrito</button>
+        </form>
+        <a href="/products/{{ this.id }}">Ver detalle</a>
+        {{/ifEquals}}
+    </td>
 </tr>
