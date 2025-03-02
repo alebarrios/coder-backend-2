@@ -35,22 +35,18 @@ async function registerUser(req, res) {
 };
 
 async function passportRegistered(req, res) {
-        console.log("Usuario registrado: ", req.session.passport.user);
         res.redirect("/login");
 }
 
 async function failRegister(req, res) {
-    console.log("Error o Usuario ya existe. Redireccionando a /register");
     res.redirect("/register");
 };
 
 async function passportLogged(req, res) {
-        console.log("Usuario logeado: ", req.session.passport.user);
         res.redirect("/products");
 }
 
 async function failLogin(req, res) {
-    console.log("Redireccionando a /login");
     res.redirect("/login");
 };
 

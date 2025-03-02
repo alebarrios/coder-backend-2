@@ -35,22 +35,15 @@ async function purchaseCart(req, res) {
         const productsWithoutStock = [];
         for(let item of cartDTO.toJSON().products){
             if (item.quantity <= item.product.stock) {
-                console.log("purchase: ", item.product);
-                const pr1 = await productService.updateOneById(
+                await productService.updateOneById(
                     item.product._id.toString(), { stock: item.product.stock - item.quantity });
-                console.log("pr1: ", pr1);
 
-                const pr2 = await cartService.delProductFromCart(cid,item.product._id.toString());
-                console.log("pr2: ", pr2);
-                console.log("item.product.price: ", item.product.price);
-
+                await cartService.delProductFromCart(cid,item.product._id.toString());
                 total += item.product.price * item.quantity;
-                console.log("total: ", total);
             } else {
                 productsWithoutStock.push(item.product._id.toString());
             }
         }
-        console.log(productsWithoutStock);
 
         const newTicket = {
             purchaser: req.user.email,
@@ -58,7 +51,6 @@ async function purchaseCart(req, res) {
         }
         let ticketDTO = null;
         if(total > 0){
-            console.log("voy a insertar ticket: ", newTicket);
             ticketDTO = await ticketService.insertOne(newTicket);
         }
         res.status(200)

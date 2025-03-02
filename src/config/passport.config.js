@@ -19,13 +19,11 @@ const initializePassport = () => {
         usernameField: "email",
       },
       async (req, username, password, done) => {
-        console.log("LocalStrategy: ", req.body);
 
         const { first_name, last_name, age, email } = req.body;
         try {
           const userFound = await userService.findOneByEmail(username);
           if (userFound) {
-            console.log("Usuario ya existe");
             return done(null, false);
           }
 
@@ -39,7 +37,6 @@ const initializePassport = () => {
             role: req.body?.role || "user",
             password: createHash(password),
           };
-          console.log("Creando usuario...", newUser);
           const user = await userService.insertOne(newUser);
 
           return done(null, user);
@@ -61,13 +58,9 @@ const initializePassport = () => {
         try {
           const userFound = await userService.validateEmailAndPass(username, password, false);
           if (!userFound) {
-            console.log("Local Strategy - login - Usuario o Contraseña incorrecta");
-
             return done(null, false);
           } else {
             req.session.user = userFound.toJSON();
-            console.log("Local Strategy - login user: " , req.session.user);
-
             return done(null, userFound);
           }
         } catch (error) {
@@ -88,14 +81,9 @@ const initializePassport = () => {
       try {
         const userFound = await userService.findOneByEmail(profile.emails[0]?.value);
         if(userFound){
-          console.log("GoogleStrategy - Usuario encontrado -> Products");
           return done(null, userFound)
         }
-        console.log("GoogleStrategy - Usuario no está registrado. Registrar");
         const newCart = await cartService.insertOne({});
-        console.log("new cart: ", newCart);
-        console.log("id: ", newCart.id);
-        
           //si no existe lo crea
           const newUser = {
             first_name: profile.name.givenName || "",
@@ -147,7 +135,6 @@ const cookieExtractor = (req) => {
   if (req?.cookies) {
     token = req.cookies["authCookie"];
   }
-  console.log("cookieExtractor - token: ", token);
   return token;
 };
 

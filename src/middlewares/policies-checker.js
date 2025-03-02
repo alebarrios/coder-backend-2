@@ -4,13 +4,10 @@ export const isAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
           return next();
         }
-        console.log("Usuario no logueado -> Redirigiendo a /login");
         res.redirect('/login');
 }
 
 export const handlePolicies = (policies, render = false) => (req, res, next) => {
-    const authHeaders = req.headers.authorization;
-    console.log("handle policies authHeaders:", authHeaders);
 
     if (policies.includes("PUBLIC")) return next();
 
@@ -28,9 +25,6 @@ export const handlePolicies = (policies, render = false) => (req, res, next) => 
                 error: "Acceso denegado. Usuario no autenticado",
             });
         }
-
-    console.log("handle policies - user:", req.user);
-    console.log("handle policies - user Role:", req.user.role);
 
     if (!policies.includes(req.user.role.toUpperCase())) {
         if (render) {

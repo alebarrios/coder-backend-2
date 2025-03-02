@@ -3,7 +3,6 @@ import { createToken } from "../utils/sessionCheck.js";
 
 
 async function getCurrent(req, res) {
-    console.log("Req.user: ", req.user);
     res.status(200).json({ status: "success", payload: req.user });
 }
 
