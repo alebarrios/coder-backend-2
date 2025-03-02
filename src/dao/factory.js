@@ -8,7 +8,7 @@ const DaoFactory = {
   TicketsDao: null,
 };
 
-switch (env.persistence) {
+switch (env.persistence || "MONGO") {
   case "MONGO": {
     connectDB();
     const { default: CartMongo } = await import("./mongo/carts.mongo.dao.js");
