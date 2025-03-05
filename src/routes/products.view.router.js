@@ -10,4 +10,7 @@ productsViewRouter.get("/:id", isAuthenticated, handlePolicies(["USER", "ADMIN"]
 
 productsViewRouter.post("/", isAuthenticated, handlePolicies(["ADMIN"], true), productsViewController.postProduct);
 
+productsViewRouter.delete("/:id", isAuthenticated, handlePolicies(["ADMIN"], true),
+productsViewController.deleteProduct);
+
 export default productsViewRouter;

@@ -30,6 +30,7 @@ usersViewRouter.get("/auth/google/callback",
     })
   );
 
+usersViewRouter.get("/logout", handlePolicies(["PUBLIC"]), usersViewController.rootRedirect);
 usersViewRouter.post("/logout", handlePolicies(["PUBLIC"]), usersViewController.logout);
 
 usersViewRouter.get("/", handlePolicies(["PUBLIC"]), usersViewController.rootRedirect);

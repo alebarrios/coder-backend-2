@@ -34,14 +34,14 @@ async function purchaseCart(req, res) {
         let total = 0;
         const productsWithoutStock = [];
         for(let item of cartDTO.toJSON().products){
-            if (item.quantity <= item.product.stock) {
+            if (item.quantity <= (item.product?.stock || 0)) {
                 await productService.updateOneById(
                     item.product._id.toString(), { stock: item.product.stock - item.quantity });
 
                 await cartService.delProductFromCart(cid,item.product._id.toString());
                 total += item.product.price * item.quantity;
             } else {
-                productsWithoutStock.push(item.product._id.toString());
+                item.product?._id && productsWithoutStock.push(item.product._id.toString());
             }
         }
 

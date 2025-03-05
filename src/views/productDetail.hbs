@@ -16,7 +16,7 @@
             <th>Categoría</th>
         </tr>
         <tr>
-            <td>{{product._id}}</td>
+            <td>{{product.id}}</td>
             <td>{{product.title}}</td>
             <td>{{product.description}}</td>
             <td>{{product.code}}</td>
@@ -30,5 +30,10 @@
     <form action="/carts/{{ cartId }}/product/{{ id }}" method="post">
         <button type="submit">Agregar al Carrito</button>
     </form>
+    {{#ifEquals role "ADMIN"}}
+    <form id="btn-delete-product" action="/products/{{ id }}">
+        <button type="submit">Eliminar</button>
+    </form>
+    {{/ifEquals}}
     <a href="/products">Volver a Productos</a>
 </main>

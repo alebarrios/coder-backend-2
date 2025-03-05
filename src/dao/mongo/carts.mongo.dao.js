@@ -29,7 +29,7 @@ export default class CartsDAO{
         }
 
         const productIndex =
-            cartFound.products.findIndex((item) => item.product._id.toString() === productId);
+            cartFound.products.findIndex((item) => item.product?._id.toString() === productId);
 
         if (productIndex >= 0) {
             cartFound.products[productIndex].quantity++;
